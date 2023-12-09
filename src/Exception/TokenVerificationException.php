@@ -1,6 +1,6 @@
 <?php
-namespace pmill\AwsCognito\Exception;
 
-class TokenVerificationException extends \Exception
-{
+namespace abhijeet\AwsCognito\Exception;
+
+class TokenVerificationException extends \Exception {
 }

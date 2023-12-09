@@ -1,5 +1,6 @@
 <?php
-/** @var \pmill\AwsCognito\CognitoClient $client */
+
+/** @var \abhijeet\AwsCognito\CognitoClient $client */
 $client = require(__DIR__ . '/bootstrap.php');
 
 
@@ -9,5 +10,4 @@ $email = 'newmail@examlpe.com';
 $client->updateUserAttributes($username, [
     "email" => $email,
     "custom:myvar" => "Foo42"
-    ]);
-
+]);

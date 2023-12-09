@@ -1,15 +1,15 @@
 <?php
-namespace pmill\AwsCognito\Tests\Unit;
+
+namespace abhijeet\AwsCognito\Tests\Unit;
 
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\ResultInterface;
 use Faker\Factory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use pmill\AwsCognito\CognitoClient;
+use abhijeet\AwsCognito\CognitoClient;
 
-class CognitoClientTest extends TestCase
-{
+class CognitoClientTest extends TestCase {
     private const CONFIG = [
         'credentials' => [
             'key' => 'key_test',
@@ -30,8 +30,7 @@ class CognitoClientTest extends TestCase
     private $cognitoIdentityProviderClientMock;
     private $cognitoClient;
 
-    public function setUp(): void
-    {
+    public function setUp(): void {
         $this->faker = Factory::create();
 
         $this->cognitoIdentityProviderClientMock = $this
@@ -41,8 +40,7 @@ class CognitoClientTest extends TestCase
                 'respondToAuthChallenge',
             ])
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass()
-        ;
+            ->getMockForAbstractClass();
 
         $this->cognitoClient = new CognitoClient($this->cognitoIdentityProviderClientMock);
         $this->cognitoClient->setAppClientId(self::CONFIG['app_client_id']);
@@ -51,8 +49,7 @@ class CognitoClientTest extends TestCase
         $this->cognitoClient->setUserPoolId(self::CONFIG['user_pool_id']);
     }
 
-    public function testAuthenticate(): void
-    {
+    public function testAuthenticate(): void {
         $username = $this->faker->userName;
         $password = $this->faker->password;
 
@@ -75,8 +72,7 @@ class CognitoClientTest extends TestCase
         $this->assertSame(self::RAW_RESPONSE_ARRAY['AuthenticationResult'], $result);
     }
 
-    public function testRespondToAuthChallenge(): void
-    {
+    public function testRespondToAuthChallenge(): void {
         $availableChallengeNames = [
             'SMS_MFA',
             'SOFTWARE_TOKEN_MFA',
@@ -90,7 +86,7 @@ class CognitoClientTest extends TestCase
             'NEW_PASSWORD_REQUIRED',
         ];
         $challengeName = $this->faker->randomElement($availableChallengeNames);
-        $challengeResponses =$this->faker->randomElements($availableChallengeNames, 2);
+        $challengeResponses = $this->faker->randomElements($availableChallengeNames, 2);
         $session = $this->faker->uuid;
 
         $this->cognitoIdentityProviderClientMock->expects(static::once())
@@ -108,8 +104,7 @@ class CognitoClientTest extends TestCase
         $this->assertSame(self::RAW_RESPONSE_ARRAY['AuthenticationResult'], $result);
     }
 
-    public function testRespondToNewPasswordRequiredChallenge(): void
-    {
+    public function testRespondToNewPasswordRequiredChallenge(): void {
         $username = $this->faker->userName;
         $newPassword = $this->faker->password;
         $session = $this->faker->uuid;
@@ -133,8 +128,7 @@ class CognitoClientTest extends TestCase
         $this->assertSame(self::RAW_RESPONSE_ARRAY['AuthenticationResult'], $result);
     }
 
-    public function testRefreshAuthentication(): void
-    {
+    public function testRefreshAuthentication(): void {
         $username = $this->faker->userName;
         $refreshToken = $this->faker->word;
 
@@ -157,8 +151,7 @@ class CognitoClientTest extends TestCase
         $this->assertSame(self::RAW_RESPONSE_ARRAY['AuthenticationResult'], $result);
     }
 
-    private function getBasicResponse(): MockObject
-    {
+    private function getBasicResponse(): MockObject {
         $response = $this->createMock(ResultInterface::class);
         $response->expects(static::once())
             ->method('toArray')
@@ -167,8 +160,7 @@ class CognitoClientTest extends TestCase
         return $response;
     }
 
-    private function cognitoSecretHash($username)
-    {
+    private function cognitoSecretHash($username) {
         $hash = hash_hmac(
             'sha256',
             $username . self::CONFIG['app_client_id'],

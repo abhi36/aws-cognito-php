@@ -1,6 +1,6 @@
 <?php
 
-namespace pmill\AwsCognito;
+namespace abhijeet\AwsCognito;
 
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
@@ -11,13 +11,12 @@ use Jose\Component\Core\JWKSet;
 use Jose\Component\Signature\Algorithm\RS256;
 use Jose\Component\Signature\JWSVerifier;
 use Jose\Component\Signature\Serializer\CompactSerializer;
-use pmill\AwsCognito\Exception\ChallengeException;
-use pmill\AwsCognito\Exception\CognitoResponseException;
-use pmill\AwsCognito\Exception\TokenExpiryException;
-use pmill\AwsCognito\Exception\TokenVerificationException;
+use abhijeet\AwsCognito\Exception\ChallengeException;
+use abhijeet\AwsCognito\Exception\CognitoResponseException;
+use abhijeet\AwsCognito\Exception\TokenExpiryException;
+use abhijeet\AwsCognito\Exception\TokenVerificationException;
 
-class CognitoClient
-{
+class CognitoClient {
     const CHALLENGE_NEW_PASSWORD_REQUIRED = 'NEW_PASSWORD_REQUIRED';
 
     /**
@@ -55,8 +54,7 @@ class CognitoClient
      *
      * @param CognitoIdentityProviderClient $client
      */
-    public function __construct(CognitoIdentityProviderClient $client)
-    {
+    public function __construct(CognitoIdentityProviderClient $client) {
         $this->client = $client;
     }
 
@@ -68,8 +66,7 @@ class CognitoClient
      * @throws ChallengeException
      * @throws Exception
      */
-    public function authenticate($username, $password)
-    {
+    public function authenticate($username, $password) {
         try {
             $response = $this->client->adminInitiateAuth([
                 'AuthFlow' => 'ADMIN_NO_SRP_AUTH',
@@ -97,8 +94,7 @@ class CognitoClient
      * @throws ChallengeException
      * @throws Exception
      */
-    public function respondToAuthChallenge($challengeName, array $challengeResponses, $session)
-    {
+    public function respondToAuthChallenge($challengeName, array $challengeResponses, $session) {
         try {
             $response = $this->client->respondToAuthChallenge([
                 'ChallengeName' => $challengeName,
@@ -121,8 +117,7 @@ class CognitoClient
      * @throws ChallengeException
      * @throws Exception
      */
-    public function respondToNewPasswordRequiredChallenge($username, $newPassword, $session)
-    {
+    public function respondToNewPasswordRequiredChallenge($username, $newPassword, $session) {
         return $this->respondToAuthChallenge(
             self::CHALLENGE_NEW_PASSWORD_REQUIRED,
             [
@@ -140,8 +135,7 @@ class CognitoClient
      * @return string
      * @throws Exception
      */
-    public function refreshAuthentication($username, $refreshToken)
-    {
+    public function refreshAuthentication($username, $refreshToken) {
         try {
             $response = $this->client->adminInitiateAuth([
                 'AuthFlow' => 'REFRESH_TOKEN_AUTH',
@@ -168,8 +162,7 @@ class CognitoClient
      * @throws TokenExpiryException
      * @throws TokenVerificationException
      */
-    public function changePassword($accessToken, $previousPassword, $proposedPassword)
-    {
+    public function changePassword($accessToken, $previousPassword, $proposedPassword) {
         $this->verifyAccessToken($accessToken);
 
         try {
@@ -188,8 +181,7 @@ class CognitoClient
      * @param string $username
      * @throws Exception
      */
-    public function confirmUserRegistration($confirmationCode, $username)
-    {
+    public function confirmUserRegistration($confirmationCode, $username) {
         try {
             $this->client->confirmSignUp([
                 'ClientId' => $this->appClientId,
@@ -209,8 +201,7 @@ class CognitoClient
      * @throws TokenVerificationException
      * @return AwsResult
      */
-    public function getUserByToken($accessToken)
-    {
+    public function getUserByToken($accessToken) {
         try {
             $response = $this->client->getUser([
                 'AccessToken' => $accessToken,
@@ -227,8 +218,7 @@ class CognitoClient
      * @throws UserNotFoundException
      * @throws CognitoResponseException
      */
-    public function getUser($username)
-    {
+    public function getUser($username) {
         try {
             $response = $this->client->adminGetUser([
                 'Username' => $username,
@@ -246,8 +236,7 @@ class CognitoClient
      * @throws TokenExpiryException
      * @throws TokenVerificationException
      */
-    public function deleteUser($accessToken)
-    {
+    public function deleteUser($accessToken) {
         $this->verifyAccessToken($accessToken);
 
         try {
@@ -259,13 +248,12 @@ class CognitoClient
         }
     }
 
-    
+
     /**
-    * Disable a user
-    * @param string $username
-    */
-    public function adminEnableUser($username)
-    {
+     * Disable a user
+     * @param string $username
+     */
+    public function adminEnableUser($username) {
         try {
             return $this->client->adminEnableUser([
                 'UserPoolId' => $this->userPoolId,
@@ -275,13 +263,12 @@ class CognitoClient
             throw CognitoResponseException::createFromCognitoException($e);
         }
     }
-    
+
     /**
-    * Disable a user
-    * @param string $username
-    */
-    public function adminDisableUser($username)
-    {
+     * Disable a user
+     * @param string $username
+     */
+    public function adminDisableUser($username) {
         try {
             return $this->client->adminDisableUser([
                 'UserPoolId' => $this->userPoolId,
@@ -291,25 +278,24 @@ class CognitoClient
             throw CognitoResponseException::createFromCognitoException($e);
         }
     }
-    
+
 
     /**
-    * @param string $username
-    * @param string $password
-    * @param boolean $permanent, decide whether to set this password as parmanent
-    *
-    * @return empty body
-    * @throws Exception
-    */
-    public function adminSetUserPassword($username, $password, $permanent = 0)
-    {
+     * @param string $username
+     * @param string $password
+     * @param boolean $permanent, decide whether to set this password as parmanent
+     *
+     * @return empty body
+     * @throws Exception
+     */
+    public function adminSetUserPassword($username, $password, $permanent = 0) {
         $permanent = filter_var($permanent, FILTER_VALIDATE_BOOLEAN);
         try {
             return $this->client->AdminSetUserPassword([
-               "Password" => $password,
-               "Permanent" => $permanent,
-               "Username" => $username,
-               "UserPoolId" => $this->userPoolId
+                "Password" => $password,
+                "Permanent" => $permanent,
+                "Username" => $username,
+                "UserPoolId" => $this->userPoolId
             ]);
         } catch (CognitoIdentityProviderException $e) {
             throw CognitoResponseException::createFromCognitoException($e);
@@ -324,8 +310,7 @@ class CognitoClient
      * @return object
      * @throws Exception
      */
-    public function adminCreateUser($username, $password, $attributes = [])
-    {
+    public function adminCreateUser($username, $password, $attributes = []) {
         $userAttributes = $this->buildAttributesArray($attributes);
         try {
             $registeredUser = $this->client->adminCreateUser([
@@ -348,8 +333,7 @@ class CognitoClient
      * @throws Exception
      * @throws Exception
      */
-    public function adminDeleteUser($username)
-    {
+    public function adminDeleteUser($username) {
         try {
             $this->client->adminDeleteUser([
                 'UserPoolId' => $this->userPoolId,
@@ -365,8 +349,7 @@ class CognitoClient
      * @param string $groupName
      * @throws Exception
      */
-    public function addUserToGroup($username, $groupName)
-    {
+    public function addUserToGroup($username, $groupName) {
         try {
             $this->client->adminAddUserToGroup([
                 'UserPoolId' => $this->userPoolId,
@@ -384,8 +367,7 @@ class CognitoClient
      * @param string $groupName
      * @throws Exception
      */
-    public function createGroup($groupName)
-    {
+    public function createGroup($groupName) {
         try {
             return $this->client->createGroup([
                 "GroupName" => $groupName,
@@ -401,8 +383,7 @@ class CognitoClient
      * @param array $attributes
      * @throws Exception
      */
-    public function updateUserAttributes($username, array $attributes = [])
-    {
+    public function updateUserAttributes($username, array $attributes = []) {
         $userAttributes = $this->buildAttributesArray($attributes);
 
         try {
@@ -419,8 +400,7 @@ class CognitoClient
     /**
      * @return JWKSet
      */
-    public function getJwtWebKeys()
-    {
+    public function getJwtWebKeys() {
         if (!$this->jwtWebKeys) {
             $json = $this->downloadJwtWebKeys();
             $this->jwtWebKeys = JWKSet::createFromJson($json);
@@ -432,16 +412,14 @@ class CognitoClient
     /**
      * @param JWKSet $jwtWebKeys
      */
-    public function setJwtWebKeys(JWKSet $jwtWebKeys)
-    {
+    public function setJwtWebKeys(JWKSet $jwtWebKeys) {
         $this->jwtWebKeys = $jwtWebKeys;
     }
 
     /**
      * @return string
      */
-    protected function downloadJwtWebKeys()
-    {
+    protected function downloadJwtWebKeys() {
         $url = sprintf(
             'https://cognito-idp.%s.amazonaws.com/%s/.well-known/jwks.json',
             $this->region,
@@ -458,8 +436,7 @@ class CognitoClient
      * @return string
      * @throws Exception
      */
-    public function registerUser($username, $password, array $attributes = [])
-    {
+    public function registerUser($username, $password, array $attributes = []) {
         $userAttributes = $this->buildAttributesArray($attributes);
 
         try {
@@ -483,8 +460,7 @@ class CognitoClient
      * @param string $proposedPassword
      * @throws Exception
      */
-    public function resetPassword($confirmationCode, $username, $proposedPassword)
-    {
+    public function resetPassword($confirmationCode, $username, $proposedPassword) {
         try {
             $this->client->confirmForgotPassword([
                 'ClientId' => $this->appClientId,
@@ -502,8 +478,7 @@ class CognitoClient
      * @param string $username
      * @throws Exception
      */
-    public function resendRegistrationConfirmationCode($username)
-    {
+    public function resendRegistrationConfirmationCode($username) {
         try {
             $this->client->resendConfirmationCode([
                 'ClientId' => $this->appClientId,
@@ -519,8 +494,7 @@ class CognitoClient
      * @param string $username
      * @throws Exception
      */
-    public function sendForgottenPasswordRequest($username)
-    {
+    public function sendForgottenPasswordRequest($username) {
         try {
             $this->client->forgotPassword([
                 'ClientId' => $this->appClientId,
@@ -535,40 +509,35 @@ class CognitoClient
     /**
      * @param string $appClientId
      */
-    public function setAppClientId($appClientId)
-    {
+    public function setAppClientId($appClientId) {
         $this->appClientId = $appClientId;
     }
 
     /**
      * @param string $appClientSecret
      */
-    public function setAppClientSecret($appClientSecret)
-    {
+    public function setAppClientSecret($appClientSecret) {
         $this->appClientSecret = $appClientSecret;
     }
 
     /**
      * @param CognitoIdentityProviderClient $client
      */
-    public function setClient($client)
-    {
+    public function setClient($client) {
         $this->client = $client;
     }
 
     /**
      * @param string $region
      */
-    public function setRegion($region)
-    {
+    public function setRegion($region) {
         $this->region = $region;
     }
 
     /**
      * @param string $userPoolId
      */
-    public function setUserPoolId($userPoolId)
-    {
+    public function setUserPoolId($userPoolId) {
         $this->userPoolId = $userPoolId;
     }
 
@@ -577,8 +546,7 @@ class CognitoClient
      * @return array
      * @throws TokenVerificationException
      */
-    public function decodeAccessToken($accessToken)
-    {
+    public function decodeAccessToken($accessToken) {
         $algorithmManager = AlgorithmManager::create([
             new RS256(),
         ]);
@@ -608,8 +576,7 @@ class CognitoClient
      *
      * @throws TokenExpiryException
      */
-    public function verifyAccessToken($accessToken)
-    {
+    public function verifyAccessToken($accessToken) {
         $jwtPayload = $this->decodeAccessToken($accessToken);
 
         $expectedIss = sprintf('https://cognito-idp.%s.amazonaws.com/%s', $this->region, $this->userPoolId);
@@ -617,7 +584,7 @@ class CognitoClient
             throw new TokenVerificationException('invalid iss');
         }
 
-        if ( !in_array($jwtPayload['token_use'], ['id','access']) ) {
+        if (!in_array($jwtPayload['token_use'], ['id', 'access'])) {
             throw new TokenVerificationException('invalid token_use');
         }
 
@@ -633,8 +600,7 @@ class CognitoClient
      *
      * @return string
      */
-    public function cognitoSecretHash($username)
-    {
+    public function cognitoSecretHash($username) {
         return $this->hash($username . $this->appClientId);
     }
 
@@ -644,8 +610,7 @@ class CognitoClient
      * @return \Aws\Result
      * @throws Exception
      */
-    public function getGroupsForUsername($username)
-    {
+    public function getGroupsForUsername($username) {
         try {
             return $this->client->adminListGroupsForUser([
                 'UserPoolId' => $this->userPoolId,
@@ -654,7 +619,6 @@ class CognitoClient
         } catch (Exception $e) {
             throw CognitoResponseException::createFromCognitoException($e);
         }
-
     }
 
     /**
@@ -662,8 +626,7 @@ class CognitoClient
      *
      * @return string
      */
-    protected function hash($message)
-    {
+    protected function hash($message) {
         $hash = hash_hmac(
             'sha256',
             $message,
@@ -680,8 +643,7 @@ class CognitoClient
      * @throws ChallengeException
      * @throws Exception
      */
-    protected function handleAuthenticateResponse(array $response)
-    {
+    protected function handleAuthenticateResponse(array $response) {
         if (isset($response['AuthenticationResult'])) {
             return $response['AuthenticationResult'];
         }
@@ -697,8 +659,7 @@ class CognitoClient
      * @param array $attributes
      * @return array
      */
-    private function buildAttributesArray(array $attributes): array
-    {
+    private function buildAttributesArray(array $attributes): array {
         $userAttributes = [];
         foreach ($attributes as $key => $value) {
             $userAttributes[] = [

@@ -1,8 +1,8 @@
 <?php
-namespace pmill\AwsCognito\Exception;
 
-class ChallengeException extends \Exception
-{
+namespace abhijeet\AwsCognito\Exception;
+
+class ChallengeException extends \Exception {
     /**
      * @var string
      */
@@ -27,8 +27,7 @@ class ChallengeException extends \Exception
      * @param array $response
      * @return ChallengeException
      */
-    public static function createFromAuthenticateResponse(array $response)
-    {
+    public static function createFromAuthenticateResponse(array $response) {
         $challengeException = new ChallengeException();
         $challengeException->setResponse($response);
         $challengeException->setChallengeName($response['ChallengeName']);
@@ -44,64 +43,56 @@ class ChallengeException extends \Exception
     /**
      * @return string
      */
-    public function getChallengeName()
-    {
+    public function getChallengeName() {
         return $this->challengeName;
     }
 
     /**
      * @param string $challengeName
      */
-    public function setChallengeName($challengeName)
-    {
+    public function setChallengeName($challengeName) {
         $this->challengeName = $challengeName;
     }
 
     /**
      * @return array
      */
-    public function getChallengeParameters()
-    {
+    public function getChallengeParameters() {
         return $this->challengeParameters;
     }
 
     /**
      * @param array $challengeParameters
      */
-    public function setChallengeParameters($challengeParameters)
-    {
+    public function setChallengeParameters($challengeParameters) {
         $this->challengeParameters = $challengeParameters;
     }
 
     /**
      * @return array
      */
-    public function getResponse()
-    {
+    public function getResponse() {
         return $this->response;
     }
 
     /**
      * @param array $response
      */
-    public function setResponse($response)
-    {
+    public function setResponse($response) {
         $this->response = $response;
     }
 
     /**
      * @return string
      */
-    public function getSession()
-    {
+    public function getSession() {
         return $this->session;
     }
 
     /**
      * @param string $session
      */
-    public function setSession($session)
-    {
+    public function setSession($session) {
         $this->session = $session;
     }
 }

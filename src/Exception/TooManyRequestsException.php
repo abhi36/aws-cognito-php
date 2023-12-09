@@ -1,6 +1,6 @@
 <?php
-namespace pmill\AwsCognito\Exception;
 
-class TooManyRequestsException extends CognitoResponseException
-{
+namespace abhijeet\AwsCognito\Exception;
+
+class TooManyRequestsException extends CognitoResponseException {
 }
