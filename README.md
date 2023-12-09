@@ -1,7 +1,7 @@
-# abhi36/aws-cognito
+# abhi36/aws-cognito-php
 
-![Downloads](https://poser.pugx.org/abhi36/aws-cognito/downloads)
-[![Build Status](https://travis-ci.com/abhi36/aws-cognito.svg?branch=master)](https://travis-ci.com/abhi36/aws-cognito)
+![Downloads](https://poser.pugx.org/abhi36/aws-cognito-php/downloads)
+[![Build Status](https://travis-ci.com/abhi36/aws-cognito-php.svg?branch=master)](https://travis-ci.com/abhi36/aws-cognito-php)
 
 ## Introduction
 
@@ -104,6 +104,6 @@ before running them.
 
 ## Copyright
 
-abhi36/aws-cognito
+abhi36/aws-cognito/php
 Copyright (c) 2023 Abhijeet (hello@abhijeetkarmakar.com)
 All rights reserved.
