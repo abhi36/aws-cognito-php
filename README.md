@@ -104,6 +104,6 @@ before running them.
 
 ## Copyright
 
-abhi36/aws-cognito/php
+abhi36/aws-cognito-php
 Copyright (c) 2023 Abhijeet (hello@abhijeetkarmakar.com)
 All rights reserved.
