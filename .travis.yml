@@ -1,8 +1,9 @@
 language: php
 rvm:
-  - 7.2
-  - 7.3
-  - 7.4
+    - 7.2
+    - 7.3
+    - 7.4
+    - 8.2
 
 install:
-  - composer install --no-interaction
+    - composer install --no-interaction
