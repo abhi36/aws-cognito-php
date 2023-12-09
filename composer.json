@@ -1,5 +1,5 @@
 {
-    "name": "abhi36/aws-cognito",
+    "name": "abhi36/aws-cognito-php",
     "description": "A PHP client for AWS Cognito user pools",
     "keywords": [
         "php",
@@ -8,7 +8,7 @@
         "cognito",
         "api"
     ],
-    "homepage": "https://github.com/abhi36/aws-cognito",
+    "homepage": "https://github.com/abhi36/aws-cognito-php",
     "license": "MIT",
     "authors": [
         {
