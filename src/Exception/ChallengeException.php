@@ -1,6 +1,6 @@
 <?php
 
-namespace abhijeet\AwsCognito\Exception;
+namespace abhi36\AwsCognito\Exception;
 
 class ChallengeException extends \Exception {
     /**

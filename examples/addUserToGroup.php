@@ -1,6 +1,6 @@
 <?php
 
-/** @var \abhijeet\AwsCognito\CognitoClient $client */
+/** @var \abhi36\AwsCognito\CognitoClient $client */
 $client = require(__DIR__ . '/bootstrap.php');
 
 

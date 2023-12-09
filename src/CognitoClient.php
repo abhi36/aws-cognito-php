@@ -1,6 +1,6 @@
 <?php
 
-namespace abhijeet\AwsCognito;
+namespace abhi36\AwsCognito;
 
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
@@ -11,10 +11,10 @@ use Jose\Component\Core\JWKSet;
 use Jose\Component\Signature\Algorithm\RS256;
 use Jose\Component\Signature\JWSVerifier;
 use Jose\Component\Signature\Serializer\CompactSerializer;
-use abhijeet\AwsCognito\Exception\ChallengeException;
-use abhijeet\AwsCognito\Exception\CognitoResponseException;
-use abhijeet\AwsCognito\Exception\TokenExpiryException;
-use abhijeet\AwsCognito\Exception\TokenVerificationException;
+use abhi36\AwsCognito\Exception\ChallengeException;
+use abhi36\AwsCognito\Exception\CognitoResponseException;
+use abhi36\AwsCognito\Exception\TokenExpiryException;
+use abhi36\AwsCognito\Exception\TokenVerificationException;
 
 class CognitoClient {
     const CHALLENGE_NEW_PASSWORD_REQUIRED = 'NEW_PASSWORD_REQUIRED';

@@ -1,6 +1,6 @@
 <?php
 
-namespace abhijeet\AwsCognito\Exception;
+namespace abhi36\AwsCognito\Exception;
 
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Exception;
@@ -20,7 +20,7 @@ class CognitoResponseException extends Exception {
      * @return Exception
      */
     public static function createFromCognitoException(CognitoIdentityProviderException $e) {
-        $errorClass = "abhijeet\\AwsCognito\\Exception\\" . $e->getAwsErrorCode();
+        $errorClass = "abhi36\\AwsCognito\\Exception\\" . $e->getAwsErrorCode();
 
         if (class_exists($errorClass)) {
             return new $errorClass($e);

@@ -1,5 +1,5 @@
 {
-    "name": "abhijeet/aws-cognito",
+    "name": "abhi36/aws-cognito",
     "description": "A PHP client for AWS Cognito user pools",
     "keywords": [
         "php",
@@ -12,7 +12,6 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Abhijeet",
             "email": "hello@abhijeetkarmakar.com"
         }
     ],
@@ -22,8 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "abhijeet\\AwsCognito\\": "src/",
-            "abhijeet\\AwsCognito\\Tests\\": "tests/"
+            "abhi36\\AwsCognito\\": "src/",
+            "abhi36\\AwsCognito\\Tests\\": "tests/"
         }
     },
     "require-dev": {

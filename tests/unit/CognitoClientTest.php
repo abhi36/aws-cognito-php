@@ -1,13 +1,13 @@
 <?php
 
-namespace abhijeet\AwsCognito\Tests\Unit;
+namespace abhi36\AwsCognito\Tests\Unit;
 
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\ResultInterface;
 use Faker\Factory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use abhijeet\AwsCognito\CognitoClient;
+use abhi36\AwsCognito\CognitoClient;
 
 class CognitoClientTest extends TestCase {
     private const CONFIG = [

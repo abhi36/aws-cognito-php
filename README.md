@@ -1,7 +1,7 @@
-# abhijeet/aws-cognito
+# abhi36/aws-cognito
 
-![Downloads](https://poser.pugx.org/abhijeet/aws-cognito/downloads)
-[![Build Status](https://travis-ci.com/abhijeet/aws-cognito.svg?branch=master)](https://travis-ci.com/abhijeet/aws-cognito)
+![Downloads](https://poser.pugx.org/abhi36/aws-cognito/downloads)
+[![Build Status](https://travis-ci.com/abhi36/aws-cognito.svg?branch=master)](https://travis-ci.com/abhi36/aws-cognito)
 
 ## Introduction
 
@@ -26,7 +26,7 @@ curl -sS https://getcomposer.org/installer | php
 Next, run the Composer command to install the latest version:
 
 ```bash
-php composer.phar require abhijeet/aws-cognito
+php composer.phar require abhi36/aws-cognito
 ```
 
 ## Usage
@@ -104,6 +104,6 @@ before running them.
 
 ## Copyright
 
-abhijeet/aws-cognito
-Copyright (c) 2017 Abhijeet (hello@abhijeetkarmakar.com)
+abhi36/aws-cognito
+Copyright (c) 2023 Abhijeet (hello@abhijeetkarmakar.com)
 All rights reserved.

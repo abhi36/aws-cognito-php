@@ -1,8 +1,8 @@
 <?php
 
-use abhijeet\AwsCognito\CognitoClient;
-use abhijeet\AwsCognito\Exception\ChallengeException;
-use abhijeet\AwsCognito\Exception\PasswordResetRequiredException;
+use abhi36\AwsCognito\CognitoClient;
+use abhi36\AwsCognito\Exception\ChallengeException;
+use abhi36\AwsCognito\Exception\PasswordResetRequiredException;
 
 /** @var CognitoClient $client */
 $client = require(__DIR__ . '/bootstrap.php');
